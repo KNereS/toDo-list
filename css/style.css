@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
+html {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(90deg, #00507e 0%, #00152c 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(45deg, #ffffff 0, #ace8ff 100%);
+    width: 400px;
+    padding: 3em;
+    border-radius: 15px;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 10px black;
+    margin: 3em;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #001730;
+    text-align: center;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.input-box {
+    font-family: "Poppins", sans-serif;
+    height: 30px;
+    width: 250px;
+    border-radius: 25px;
+    border: solid 1px #7ba6b8;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.input-box:focus {
+    outline: none;
+}
+
+.addTask {
+    font-family: "Poppins", sans-serif;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border-radius: 100%;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    background: linear-gradient(45deg, #00507e 0%, #00152c 100%);
+    cursor: pointer;
+}
+
+.addTask:hover {
+    transform: scale(1.05);
+    transition: 0.2s ease-in-out;
+}
+
+.addTask:not(:hover){
+    transform: scale(1);
+    transition: 0.2s ease-in-out;
+}
+
+.checked {
+    color: lightgray;
+    text-decoration: line-through;
+    text-decoration-color: lightgrey;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    width: 300px;
+    padding: 0.5em;
+    font-weight: 400;
+    color: #00152c;
+}
+
+.delete-task {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    background: linear-gradient(45deg, #00507e 0%, #00152c 100%);
+    color: white;
+    cursor: pointer;
+}
+
+.task-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    gap: 0.5em;
+}
+
+.task-checkbox input {
+    margin: 0;
+}
