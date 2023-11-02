@@ -1,71 +1,123 @@
-// Localiza o elemento "ul" referente a lista de Tasks:
 const taskList = document.getElementById("task-list");
 
-const addTask = () => {
+saveData = () => {
+    console.log("Dados salvos!");
+    localStorage.setItem("data", taskList.innerHTML)
+}
 
-    // Extrai o Texto do Input-Box:
+loadData = () => {
+    console.log("Dados carregados!")
+    taskList.innerHTML = localStorage.getItem("data");
+
+    const inputsCheckbox = document.getElementsByName("checkbox-input");
+    const inputsCheckboxArr = [...inputsCheckbox];
+
+    inputsCheckboxArr.forEach((el) => {
+        if (el.nextSibling.className == "checked") {
+            el.checked = true;
+        }
+    });
+
+}
+
+addEvents = () => {
+
+    console.log("EventListener's adicionados!");
+
+    // Adicionando EventListener aos elementos "button":
+    const buttons = document.getElementsByClassName("delete-task");
+    const buttonsArr = [...buttons];
+
+    buttonsArr.forEach((el) => addOnClick(el))
+
+    function addOnClick(el) {
+        el.addEventListener("click", () => {
+            taskList.removeChild(el.parentNode);
+            saveData();
+        })
+    }
+
+    // Adicionando EventListener aos elementos "input":
+    const inputsCheckbox = document.getElementsByName("checkbox-input");
+    const inputsCheckboxArr = [...inputsCheckbox];
+
+    inputsCheckboxArr.forEach((el) => addChecked(el))
+
+    function addChecked(el) {
+        el.addEventListener("change", () => {
+
+            if (el.checked == true){
+                el.nextSibling.className = "checked"
+                saveData();
+            } else {
+                el.nextSibling.className = "non-checked"
+                saveData();
+            }
+        })
+    }
+
+}
+
+addTask = () => {
+
+    // Extraindo texto digitado no Input do Usuário:
     const inputBox = document.getElementById("input-box");
     const text = inputBox.value;
 
     if (!text) {
-        alert("Please, write something.")
-    } else {
+        alert("You need to write something.")
+    }
+    else {
+
+        // Criando elemento "li":
+        const listItem = document.createElement("li");
+        listItem.className = "task";
+
+        // Criando elemento "div" child da "li":
+        const divTaskCheckbox = document.createElement("div");
+        divTaskCheckbox.className = "task-checkbox";
+
+        // Criando elemento "input" child da "div" divTaskCheckbox:
+        const inputCheckbox = document.createElement("input");
+        inputCheckbox.type = "checkbox";
+        inputCheckbox.name = "checkbox-input";
+        inputCheckbox.id = `#${Math.round(Math.random() * Math.pow(10, 9))}`;
+
+        // Criando elemento "label" child da "div" divTaskCheckbox:
+        const labelCheckbox = document.createElement("label");
+        labelCheckbox.className = "non-checked"
+        labelCheckbox.htmlFor = inputCheckbox.id;
+        labelCheckbox.innerHTML = text;
+
+        // Adicionando os elementos "input" e "label" à "div" divTaskCheckbox:
+        divTaskCheckbox.appendChild(inputCheckbox);
+        divTaskCheckbox.appendChild(labelCheckbox);
+
+        // Adicionando a "div" divTaskCheckbox ao elemento "li":
+        listItem.appendChild(divTaskCheckbox);
+
+        // Criando elemento "button" child da "li":
+        const delButton = document.createElement("button");
+        delButton.className = "delete-task"
+        delButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`
+
+        // Adicionando elemento "button" ao "li";
+        listItem.appendChild(delButton);
+
+        // Adicionando "li" à taskList:
+        taskList.appendChild(listItem);
 
         inputBox.value = "";
 
-        // List Item:
-        const liElement = document.createElement("li");
-        liElement.className = "task";
-
-        // Conteúdo do List Item:
-
-        // div "Task Checkbox"
-        const taskCheckbox = document.createElement("div");
-        taskCheckbox.className = "task-checkbox";
-
-        // checkbox input
-        const inputCheckbox = document.createElement("input");
-        inputCheckbox.type = "checkbox";
-        inputCheckbox.id = `#${Math.round(Math.random() * Math.pow(10,9))}`;
-
-        // label
-        const labelInputCheckbox = document.createElement("label");
-        labelInputCheckbox.htmlFor = inputCheckbox.id;
-        labelInputCheckbox.innerHTML = text;
-        labelInputCheckbox.className = "non-checked";
-    
-        // Adiciona o checkbox input e a label na div "Task Checkbox"
-        taskCheckbox.appendChild(inputCheckbox);
-        taskCheckbox.appendChild(labelInputCheckbox);
-
-        // Adiciona a div "taskCheckBox" ao li:
-        liElement.appendChild(taskCheckbox);
-
-        // button
-        const button = document.createElement("button");
-        button.className = "delete-task";
-        button.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-        button.onclick = () => {
-            parentEl = button.parentNode;
-            taskList.removeChild(parentEl);
-        }
-
-        // Adiciona button ao li:
-        liElement.appendChild(button);
-
-        // Adiciona o li no TaskList:
-        taskList.appendChild(liElement);
-
-        // Adiciona a classe "checked" quando a Task for marcada como concluída:
-
-        inputCheckbox.addEventListener("change", () => {
-            if (inputCheckbox.checked) {
-                labelInputCheckbox.className = "checked";
-            } else {
-                labelInputCheckbox.className = "non-checked";
-            }
-        })
+        saveData();
+        addEvents();
 
     }
+    
+}
 
+loadData();
+
+window.onload = () => {
+    addEvents();
 }
